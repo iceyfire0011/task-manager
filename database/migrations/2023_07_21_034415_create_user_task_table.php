@@ -14,10 +14,12 @@ return new class () extends Migration {
     {
         Schema::create('user_task', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained(User::class, 'id')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('task_id')->constrained(Task::class, 'id')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('task_id');
             $table->boolean('is_notified');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('task_id')->references('id')->on('tasks')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
